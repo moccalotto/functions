@@ -1,3 +1,3 @@
 Library for calling and mocking functions
 
-See demo.php for details
+See [demo.php](demo.php) for details
