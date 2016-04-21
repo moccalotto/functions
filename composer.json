@@ -1,0 +1,21 @@
+{
+    "name": "moccalotto/functions",
+    "description": "Library for core function stubbing and testing",
+    "keywords": ["testing", "stubbing", "mocking"],
+    "require": {
+        "php": "^7.0.0"
+    },
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kim Ravn Hansen",
+            "email": "moccalotto@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Moccalotto\\Functions\\": "src"
+        }
+    }
+}
