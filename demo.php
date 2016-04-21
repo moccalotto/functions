@@ -5,9 +5,9 @@ use Moccalotto\Functions\Call;
 require 'vendor/autoload.php';
 
 /**
- * So. If you really want to be able to test your function calls,
- * you can call all functions via this Caller.
- * The caller intercepts all calls and allow you to mock and make assertions.
+ * If you really want to be able to test your function calls,
+ * you can make those critical function calls via the Call class.
+ * The caller intercepts those calls and allow you to mock and make assertions.
  *
  * This code is for illustration purposes only!
  */
@@ -31,13 +31,15 @@ var_dump(Call::sprintf('done!'));
 // method called. We don't care about args or result. We just want to see that it is called.
 var_dump(Call::sprintf('tante og fjaser!'));
 
-// This call comes out of order. It should be an unsatisfied expectation
+// We can do more thant just printf
 var_dump(Call::vsprintf('klap %s!', ['hesten']));
+
+// We can always make an un-expected call.
+// Only the expected calls are intercepted, checked and/or mocked.
+var_dump(Call::intval('555'));
 
 // Make a call where we mock the result and avoid the side effects.
 var_dump(Call::file_get_contents('https://www.example.com'));
 
 // check that all expectations are met.
 var_dump(Call::expectations()->check());
-
-
