@@ -4,7 +4,7 @@ use Moccalotto\Functions\Call;
 
 require 'vendor/autoload.php';
 
-/**
+/*
  * If you really want to be able to test your function calls,
  * you can make those critical function calls via the Call class.
  * The caller intercepts those calls and allow you to mock and make assertions.
@@ -12,20 +12,38 @@ require 'vendor/autoload.php';
  * This code is for illustration purposes only!
  */
 
-Call::expects()->callTo('sprintf')->withArgs('foo %s %s', 'bar', 'baz')->withMockedResult('NOT THE USUAL RESULT')
-    ->then()->callTo('sprintf')->withArgs('foo')->withResult('foo')
-    ->then()->callTo('sprintf')->withArgs('done!')
+Call::expects()->callTo('sprintf')
+    ->withArgs('foo %s %s', 'bar', 'baz')
+    ->withMockedResult('NOT THE USUAL RESULT')
+
     ->then()->callTo('sprintf')
-    ->then()->callTo('vsprintf')->withArgs('klap %s!', ['hesten'])
-    ->then()->callTo('file_get_contents')->withArgs('https://www.example.com')->withMockedResult('Example Domain')->withSideEffect(function($args, $result) {
-        print 'SIDE EFFECT>>>>' . PHP_EOL;
+    ->withArgs('foo')
+    ->withResult('foo')
+
+    ->then()->callTo('sprintf')
+    ->withArgs('done!')
+
+    ->then()->callTo('sprintf')
+
+    ->then()->callTo('vsprintf')
+    ->withArgs('klap %s!', ['hesten'])
+
+    ->then()->callTo('file_get_contents')
+    ->withArgs('https://www.example.com')
+    ->withMockedResult('Example Domain')
+    ->withSideEffect(function ($args, $result) {
+        echo 'SIDE EFFECT>>>>'.PHP_EOL;
         var_dump($args, $result);
-        print '<<<<' . PHP_EOL;
+        echo '<<<<'.PHP_EOL;
 
-    })->then()->callTo('header')->whereArgMatches(0, '/location/Ai')->withMockedResult(null)->withSideEffect(function($args, $result) {
-        print 'CALLED header()' . PHP_EOL;
+    })
+
+    ->then()->callTo('header')
+    ->whereArgMatches(0, '/location/Ai')
+    ->withMockedResult(null)
+    ->withSideEffect(function ($args, $result) {
+        echo 'CALLED header()'.PHP_EOL;
     });
-
 
 // method not actually called, we mock the result
 var_dump(Call::sprintf('foo %s %s', 'bar', 'baz'));
@@ -54,4 +72,3 @@ var_dump(Call::header('location: https://www.example.org'));
 
 // check that all expectations are met.
 var_dump(Call::expectations()->check());
-
