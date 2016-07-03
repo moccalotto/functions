@@ -2,7 +2,7 @@
 
 namespace Moccalotto\Functions;
 
-class Call
+class Call implements CallInterface
 {
     /**
      * Expectations
@@ -22,7 +22,7 @@ class Call
     /**
      * Get the default instance used when this class is used statically.
      */
-    public static function defaultInstance() : self
+    public static function defaultInstance() : CallInterface
     {
         static $instance = null;
 
