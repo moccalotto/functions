@@ -371,8 +371,11 @@ class Expectation
             return $this->finalize(false, 'Arguments did not match the specified criteria', null);
         }
 
-        if ($this->mocksResult) {
+        if ($this->sideEffect) {
             call_user_func($this->sideEffect, $args, $this->mockedResult);
+        }
+
+        if ($this->mocksResult) {
             return $this->finalize(true, 'Mocked Result', $this->mockedResult);
         }
 
