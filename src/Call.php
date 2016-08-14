@@ -4,6 +4,12 @@ namespace Moccalotto\Functions;
 
 class Call implements CallInterface
 {
+
+    /**
+     * @var Call
+     */
+    protected static $instance;
+
     /**
      * Expectations
      *
@@ -24,13 +30,11 @@ class Call implements CallInterface
      */
     public static function defaultInstance() : CallInterface
     {
-        static $instance = null;
-
-        if (!$instance) {
-            $instance = new static();
+        if (!static::$instance) {
+            static::$instance = new static();
         }
 
-        return $instance;
+        return static::$instance;
     }
 
     public static function __callStatic(callable $function, array $args)
